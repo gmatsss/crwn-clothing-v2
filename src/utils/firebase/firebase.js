@@ -7,6 +7,7 @@ import {
   signInWithRedirect,
   signInWithPopup,
   GoogleAuthProvider,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
@@ -26,20 +27,23 @@ const firebaseapp = initializeApp(firebaseConfig);
 
 //to use google auth
 //class og google_auth
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({
+const googleprovider = new GoogleAuthProvider();
+googleprovider.setCustomParameters({
   prompt: "select_account",
 });
 
 export const auth = getAuth();
-export const signinwithgooglepopup = () => signInWithPopup(auth, provider);
+export const signinwithgooglepopup = () =>
+  signInWithPopup(auth, googleprovider);
+export const signinwithgoogleredirect = () =>
+  signInWithRedirect(auth, googleprovider);
 
 // database in firestore
 
 export const db = getFirestore();
 
 //creating user in database
-export const createuser = async (userAuth) => {
+export const createuser = async (userAuth, addinfo = {}) => {
   console.log(userAuth);
 
   // getting the databse and collection and identifier
@@ -61,6 +65,7 @@ export const createuser = async (userAuth) => {
         displayName,
         email,
         createdAt,
+        ...addinfo,
       });
     } catch (error) {
       console.log(error);
@@ -69,4 +74,9 @@ export const createuser = async (userAuth) => {
 
   //will return to userdoc in sign in jsx
   return userdoc;
+};
+
+export const createauthwithemailandpass = async (email, password) => {
+  if (!email || !password) return;
+  return await createUserWithEmailAndPassword(auth, email, password);
 };
