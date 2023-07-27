@@ -1,14 +1,14 @@
 import Home from "./routes/home/home";
 import { Routes, Route } from "react-router-dom";
 import Navigation from "./routes/navigation/navigation";
-import Signin from "./routes/sign-in/sign-in";
+import Authentication from "./routes/authentication/authentication";
 const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigation />}>
         {/* index is the induction of base component */}
         <Route index element={<Home />} />
-        <Route path="/Signin" element={<Signin />} />
+        <Route path="/Authentication" element={<Authentication />} />
       </Route>
     </Routes>
   );
