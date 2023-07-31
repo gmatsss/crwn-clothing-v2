@@ -9,6 +9,8 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
@@ -33,27 +35,26 @@ googleprovider.setCustomParameters({
   prompt: "select_account",
 });
 
+//firabase auth
 export const auth = getAuth();
+
+//auth provide google, fb, etc
 export const signinwithgooglepopup = () =>
   signInWithPopup(auth, googleprovider);
 export const signinwithgoogleredirect = () =>
   signInWithRedirect(auth, googleprovider);
 
 // database in firestore
-
 export const db = getFirestore();
 
 //creating user in database
 export const createuser = async (userAuth, addinfo = {}) => {
-  console.log(userAuth);
-
   // getting the databse and collection and identifier
   const userdoc = doc(db, "user", userAuth.uid);
-  console.log(userdoc);
 
   //like api to access the firestore
   const usersnap = await getDoc(userdoc);
-  console.log(usersnap);
+
   console.log(usersnap.exists());
 
   //creation of user in firestore
@@ -86,3 +87,10 @@ export const signinauthwithemailandpass = async (email, password) => {
   if (!email || !password) return;
   return await signInWithEmailAndPassword(auth, email, password);
 };
+
+export const signoutuser = async () => await signOut(auth);
+
+//observer
+export const onAuthStateChangedListener = (callback) =>
+  //this observe the auth change whether it will approve will run or not
+  onAuthStateChanged(auth, callback);

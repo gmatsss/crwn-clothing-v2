@@ -22,8 +22,9 @@ const defaultformfields = {
 const Signinform = () => {
   const sisgninwithgoogle = async () => {
     const { user } = await signinwithgooglepopup();
-    const userdoc = await createuser(user);
-    console.log(userdoc);
+
+    createuser(user);
+    console.log(user);
   };
 
   const [formfields, setFormfields] = useState(defaultformfields);
@@ -37,9 +38,9 @@ const Signinform = () => {
     event.preventDefault();
 
     try {
-      const res = await signinauthwithemailandpass(email, password);
+      const { user } = await signinauthwithemailandpass(email, password);
+
       resetfields();
-      console.log(res);
     } catch (error) {
       switch (error.code) {
         case "auth/wrong-password":

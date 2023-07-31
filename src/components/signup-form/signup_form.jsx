@@ -32,11 +32,10 @@ const Signpform = () => {
       alert("Please match your password");
       return;
     }
-
     try {
       //firebase utils functions
       const { user } = await createauthwithemailandpass(email, password);
-      const res = await createuser(user, { displayName });
+      await createuser(user, { displayName });
       resetfields();
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {

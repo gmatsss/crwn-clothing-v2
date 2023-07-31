@@ -4,6 +4,9 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+//user context
+import { UserProvider } from "./context/usercontext";
+
 // react router
 import { BrowserRouter } from "react-router-dom";
 
@@ -11,7 +14,9 @@ ReactDOM.render(
   <React.StrictMode>
     {/* its like a component in routing */}
     <BrowserRouter>
-      <App />
+      <UserProvider>
+        <App />
+      </UserProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
