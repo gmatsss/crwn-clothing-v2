@@ -4,9 +4,10 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-//user context
+//React context
 import { UserProvider } from "./context/usercontext";
-
+import { Productprovider } from "./context/productscontext";
+import { Cartprovider } from "./context/cartcontext";
 // react router
 import { BrowserRouter } from "react-router-dom";
 
@@ -15,7 +16,11 @@ ReactDOM.render(
     {/* its like a component in routing */}
     <BrowserRouter>
       <UserProvider>
-        <App />
+        <Productprovider>
+          <Cartprovider>
+            <App />
+          </Cartprovider>
+        </Productprovider>
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode>,
